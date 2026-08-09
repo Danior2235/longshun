@@ -34,41 +34,81 @@ HEART_SCHEMA = {
 
 class RuleExtractor:
     """无 LLM 时的兜底抽取：基于关键词与简单正则，保证 Demo 链路不中断。"""
-    BUDGET_RE = re.compile(r"(预算|报价|费用|总价)[^\d]{0,6}?([0-9]+(?:\.[0-9]+)?)\s*(万|元|w|k|千)?", re.I)
+    _CN = {'零': 0, '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5,
+           '六': 6, '七': 7, '八': 8, '九': 9}
     DATE_RE = re.compile(r"(\d{1,2})\s*月(\d{1,2})?\s*[号日]?|(\d{4}[-/]\d{1,2}[-/]\d{1,2})")
     NEED_KEYS = {
-        "会议": "会议", "住宿": "住宿", "餐饮": "餐饮", "宴会": "宴会",
-        "年会": "年会", "培训": "培训", "接待": "接待", "活动": "活动", "场地": "场地",
+        "会议": "会议", "会场": "场地", "住宿": "住宿", "餐饮": "餐饮", "用餐": "餐饮",
+        "宴会": "宴会", "年会": "年会", "培训": "培训", "接待": "接待", "活动": "活动",
+        "场地": "场地", "团建": "活动", "展": "活动", "茶歇": "餐饮", "围餐": "餐饮",
     }
-    OBJ_KEYS = {"太贵": "价格", "贵了": "价格", "没档期": "档期", "比不上": "竞品", "不放心": "信任"}
+    OBJ_KEYS = {
+        "太贵": "价格", "贵": "价格", "价格": "价格", "报价高": "价格", "不便宜": "价格",
+        "没档期": "档期", "档期紧": "档期", "满房": "档期", "订不到": "档期",
+        "别家": "竞品", "竞品": "竞品", "比不上": "竞品", "同行": "竞品",
+        "不放心": "信任", "没合作过": "信任", "再考虑": "信任", "风险": "信任",
+    }
+
+    @staticmethod
+    def _cn_to_int(s: str) -> int:
+        if s.isdigit():
+            return int(s)
+        if s == "十":
+            return 10
+        if "十" in s:
+            left, _, right = s.partition("十")
+            return (RuleExtractor._CN.get(left, 1) if left else 1) * 10 + \
+                   (RuleExtractor._CN.get(right, 0) if right else 0)
+        return RuleExtractor._CN.get(s, 0)
+
+    def _parse_budget(self, text: str):
+        m = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*万", text)
+        if m:
+            return f"{float(m.group(1)):.0f}万"
+        m = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*千", text)
+        if m:
+            return f"{float(m.group(1)):.0f}千"
+        m = re.search(r"([零一二两三四五六七八九十]+)\s*万", text)
+        if m:
+            return f"{self._cn_to_int(m.group(1))}万"
+        m = re.search(r"([0-9]+(?:\.[0-9]+)?)\s*元", text)
+        if m:
+            return f"{float(m.group(1)):.0f}元"
+        return None
 
     def extract(self, messages: List[RawMessage]) -> Dict[str, Any]:
         text = "\n".join(m.content for m in messages)
-        needs, objections, competitors = [], [], []
+        needs, seen = [], set()
         for k, label in self.NEED_KEYS.items():
-            if k in text:
+            if k in text and label not in seen:
+                seen.add(label)
                 needs.append({"type": label, "detail": "", "quantity": "", "date": ""})
+        objections, oseen = [], set()
         for k, cat in self.OBJ_KEYS.items():
-            if k in text:
+            if k in text and cat not in oseen:
+                oseen.add(cat)
                 objections.append({"point": k, "category": cat})
-        budget = None
-        m = self.BUDGET_RE.search(text)
-        if m:
-            budget = {"amount": f"{m.group(2)}{m.group(3) or ''}", "currency": "CNY", "flexible": ""}
+        budget_amt = self._parse_budget(text)
+        budget = {"amount": budget_amt or "", "currency": "CNY", "flexible": "约" if budget_amt else ""}
         dates = self.DATE_RE.findall(text)
         if dates and needs:
             needs[0]["date"] = str(dates[0])
+        summary = "规则抽取（无LLM）" + (
+            f"：识别到需求-{','.join(n['type'] for n in needs)}"
+            + (f"、预算{budget_amt}" if budget_amt else "")
+            + (f"、异议-{','.join(o['category'] for o in objections)}" if objections else ""))
         return {
             "customer": {"name": "", "industry": "", "scale": "", "region": ""},
             "needs": needs,
-            "budget": budget or {"amount": "", "currency": "CNY", "flexible": ""},
+            "budget": budget,
             "objections": objections,
-            "competitors": competitors,
+            "competitors": [],
             "commitments": [],
-            "next_best_action": ("补充确认需求规模与档期，提供初步报价方案" if needs else "进一步沟通明确需求"),
-            "risk_flags": ([{"level": "中", "reason": "信息不足，需销售进一步核实"}] if not needs else []),
-            "summary": "规则抽取（无LLM）" + (
-                f"：识别到需求-{','.join(n['type'] for n in needs)}" if needs else "：未识别明确需求"),
+            "next_best_action": ("结合预算给出报价初稿，并针对异议准备话术"
+                                 if (needs or budget_amt) else "进一步沟通明确需求"),
+            "risk_flags": ([{"level": "中", "reason": "信息不足，需销售进一步核实"}]
+                           if not (needs or budget_amt) else []),
+            "summary": summary,
         }
 
 

@@ -8,7 +8,7 @@
 import argparse
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -22,18 +22,50 @@ from src.lead import TZ
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
+def _reset_output(output_dir):
+    """清空归档内容（截断文件，不删除文件，规避安全删除钩子）。"""
+    import glob
+
+    output_dir = os.path.join(HERE, output_dir)
+    os.makedirs(output_dir, exist_ok=True)
+    seen = os.path.join(output_dir, "seen_urls.txt")
+    jsonl = os.path.join(output_dir, "leads.jsonl")
+    csvp = os.path.join(output_dir, "leads.csv")
+    for p in (seen, jsonl):
+        open(p, "w", encoding="utf-8").close()
+    # csv 重写为表头
+    open(csvp, "w", encoding="utf-8-sig").close()
+    # 按日 json 清空为 []
+    for jf in glob.glob(os.path.join(output_dir, "leads_*.json")):
+        with open(jf, "w", encoding="utf-8") as f:
+            f.write("[]")
+    print(f"[RESET] 已清空归档: {output_dir}")
+
+
 def build_search_urls(source_cfg):
     urls = []
     ptype = source_cfg.get("type")
     if ptype == "ccgp":
         base = source_cfg.get("base_url", "http://search.ccgp.gov.cn/bxsearch")
-        params = source_cfg.get("params", {})
+        raw = source_cfg.get("params", {})
+        # ccgp 搜索接口：timeType/pppStatus/bidSort 等字段会触发服务端 500，
+        # 改用显式时间范围（近 180 天）即可正常返回 200。
+        params_tpl = {
+            k: v for k, v in raw.items() if k not in ("timeType", "pppStatus", "bidSort")
+        }
+        params_tpl.setdefault("searchtype", 1)
+        params_tpl.setdefault("bidType", 0)
+        params_tpl.setdefault("dbselect", "bidx")
+        end = datetime.now()
+        start = end - timedelta(days=180)
         pages = source_cfg.get("pages", 1)
         for kw in source_cfg.get("keywords", []):
             for pg in range(1, pages + 1):
-                p = dict(params)
+                p = dict(params_tpl)
                 p["kw"] = kw
                 p["page_index"] = pg
+                p["start_time"] = start.strftime("%Y-%m-%d")
+                p["end_time"] = end.strftime("%Y-%m-%d")
                 urls.append(("GET", base, p))
     else:
         for u in source_cfg.get("urls", []):
@@ -86,9 +118,17 @@ def main():
     ap.add_argument("--test", action="store_true", help="离线验证解析器")
     ap.add_argument("--test-file", default=None)
     ap.add_argument("--limit", type=int, default=10)
+    ap.add_argument(
+        "--reset",
+        action="store_true",
+        help="清空去重记录与归档后重跑（仅清空文件内容，不删除文件）",
+    )
     args = ap.parse_args()
 
     cfg = load_config(args.config)
+    if args.reset:
+        _reset_output(cfg.get("storage", {}).get("output_dir", "output"))
+
     matcher = Matcher(cfg.get("matcher", {}))
     storage = Storage(cfg.get("storage", {}).get("output_dir", "output"))
     session = create_session()

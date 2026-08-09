@@ -573,7 +573,7 @@ CREATE INDEX ON case_library USING hnsw (embedding vector_cosine_ops);
   - `src/`：fetcher / parsers / matcher / storage
   - `run_daily.py`：每日入口，`--test` 可离线验证解析器（不发网络请求）
   - `output/`：去重归档 `leads.jsonl`（全量）+ `leads_YYYYMMDD.json`（当日）+ `leads.csv`（Excel 可直接打开）
-- **当前状态**：解析器、匹配、去重、归档已通过离线样例验证（`--test` 跑通，正确过滤非业务标讯、保留会议/培训类、去重生效）。真实站点抓取需联网微调 fetch 参数（ccgp 搜索接口对请求格式较敏感，已在 fetch 层预留重试与参数配置位，上线前按真实返回调参即可）。
+- **当前状态**：解析器、匹配、去重、归档已通过离线样例验证（`--test` 跑通，正确过滤非业务标讯、保留会议/培训类、去重生效）；**真实站点抓取已跑通**——ccgp 搜索接口原返回 500，根因是 `timeType` 字段触发服务端报错，已改为自动注入近 180 天 `start_time/end_time`，实测返回 200 并解析出真实会议/住宿/接待/年会类线索，单批去重后 26 条。入口能力：`--test` 离线验证、`--source/--limit` 筛选、`--reset` 清空重跑；`make_report.py` 可将 `leads.jsonl` 渲染为浏览器看板 `output/report.html`。未接入项：模板源（招投公共服务平台 / 公共资源交易中心）仍 `enabled:false`，需按真实页面微调选择器后启用；轨道 A 的 `lead-hunter` Automation 与企微推送尚未接。
 
 ### 14.8 注意事项
 - 反爬：fetcher 已带 UA 伪装 + 重试退避；生产建议单源间隔 ≥3 秒、每日总量可控。

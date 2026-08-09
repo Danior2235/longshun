@@ -1,0 +1,87 @@
+# 每日招标 / 会议承办客户机会采集 - 信息源与匹配配置
+# 员工维护：新增一个网站只需在 sources 下加一段，无需改代码
+
+sources:
+  # ① 中国政府采购网：已内置解析器，按关键词逐词检索
+  - name: 中国政府采购网
+    type: ccgp
+    enabled: true
+    base_url: http://search.ccgp.gov.cn/bxsearch
+    pages: 2
+    params:
+      searchtype: 1
+      bidSort: 0
+      bidType: 0
+      dbselect: bidx
+      timeType: 6
+      pppStatus: 0
+    keywords:
+      - 会议服务
+      - 会议承办
+      - 住宿服务
+      - 培训场地
+      - 接待服务
+      - 年会
+      - 宴会
+      - 活动服务
+
+  # ② 模板示例：中国招标投标公共服务平台
+  #    通用解析器，需按实际页面微调选择器后把 enabled 改为 true
+  - name: 中国招标投标公共服务平台
+    type: generic
+    enabled: false
+    base_url: https://www.cebpubservice.com
+    search_url_template: "https://www.cebpubservice.com/xxfbcg/keyword/{keyword}"
+    list_selector: "div.search-list ul li"
+    title_selector: "a"
+    date_selector: "span.date"
+    buyer_selector: "span.buyer"
+    keywords:
+      - 会议服务
+      - 住宿
+      - 培训场地
+
+  # ③ 各省市公共资源交易中心：每个城市一个 URL，通用解析器即可
+  #    下例为占位，请按实际页面调整 list_selector / title_selector 后启用
+  - name: 本地公共资源交易中心(示例)
+    type: generic
+    enabled: false
+    urls:
+      - https://example.gov.cn/jyxx/ggzypzfcg/
+    list_selector: "ul.list li"
+    title_selector: "a"
+    date_selector: "span.time"
+
+matcher:
+  # 命中以下任一词即视为相关（会议/住宿/餐饮/活动类需求）
+  must_include_any:
+    - 会议
+    - 住宿
+    - 培训
+    - 接待
+    - 年会
+    - 宴会
+    - 场地
+    - 活动
+    - 会展
+    - 团建
+    - 承办
+    - 住宿服务
+  # 含以下词直接丢弃（非我方业务）
+  exclude:
+    - 设备采购
+    - 服务器
+    - 软件
+    - 硬件
+    - 运维
+    - 系统集成
+  min_relevance: 0.5
+
+storage:
+  output_dir: output
+
+schedule:
+  # 轨道 A：WorkBuddy Automation 每日 08:00 运行 python run_daily.py
+  # 轨道 B：cron / K8s CronJob 同理
+  cron: "0 8 * * *"
+  timezone: "Asia/Shanghai"

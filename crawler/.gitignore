@@ -1,0 +1,7 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 采集输出（按需决定是否入库；默认不提交）
+output/

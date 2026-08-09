@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+data/
+crawler/output/
+venv/
+.env
+*.log

@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索会场名 / 楼层 / 备注"
+      placeholder-class="placeholder"
+      value="{{keyword}}"
+      bindinput="onSearch"
+    />
+  </view>
+
+  <view class="summary card">
+    <text class="summary-text">共 {{total}} 个会场，支持半天 / 全天 / 小时计费</text>
+  </view>
+
+  <block wx:for="{{groups}}" wx:key="name">
+    <view class="card">
+      <view class="card-title">{{item.name}}</view>
+      <view
+        class="venue-item"
+        wx:for="{{item.items}}"
+        wx:for-item="v"
+        wx:key="id"
+      >
+        <view class="row-between">
+          <text class="venue-name">{{v.name}}</text>
+          <text class="venue-cap">{{v.cap_text}}</text>
+        </view>
+        <view class="price price-gold venue-price">{{v.price_text}}</view>
+        <view class="venue-row" wx:if="{{v.layout_text && v.layout_text !== '待定'}}">
+          <text class="venue-label">布局</text>
+          <text class="venue-value">{{v.layout_text}}</text>
+        </view>
+        <view class="venue-row">
+          <text class="venue-label">面积</text>
+          <text class="venue-value">{{v.area_sqm}}㎡</text>
+        </view>
+        <view class="tags" wx:if="{{v.eqTags.length}}">
+          <text class="tag tag-gold" wx:for="{{v.eqTags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        </view>
+        <view class="tags" wx:if="{{v.ruleTags.length}}">
+          <text class="tag tag-green" wx:for="{{v.ruleTags}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        </view>
+        <view class="note" wx:if="{{v.notes}}">{{v.notes}}</view>
+        <view class="book-btn" data-item="{{v}}" bindtap="onBook">预订该会场</view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{!loading && groups.length === 0}}" class="empty">
+    未找到匹配的会场
+  </view>
+</view>

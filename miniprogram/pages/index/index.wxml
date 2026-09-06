@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-title">龙顺庄园 · 会议中心</view>
+    <view class="hero-sub">Longshun Hotel & Conference Center</view>
+  </view>
+
+  <view class="notice card">
+    <text class="notice-text">{{notice}}</text>
+  </view>
+
+  <view class="grid">
+    <view
+      class="feature card"
+      wx:for="{{features}}"
+      wx:key="key"
+      data-path="{{item.path}}"
+      bindtap="onFeatureTap"
+    >
+      <view class="feature-icon">{{item.icon}}</view>
+      <view class="feature-name">{{item.name}}</view>
+      <view class="feature-desc">{{item.desc}}</view>
+    </view>
+  </view>
+
+  <view class="footer">支持客房 / 会场报价查询 · 在线预订 · 微信支付</view>
+</view>

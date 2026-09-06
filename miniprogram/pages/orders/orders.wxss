@@ -1,0 +1,59 @@
+.page {
+  padding: 24rpx;
+}
+
+.order-card {
+  position: relative;
+}
+
+.order-card:active {
+  opacity: 0.8;
+}
+
+.order-id {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.status {
+  font-size: 26rpx;
+  color: #c9a227;
+  font-weight: 600;
+}
+
+.status-paid {
+  color: #1d7a4f;
+}
+
+.order-row {
+  display: flex;
+  margin-top: 12rpx;
+}
+
+.order-label {
+  width: 90rpx;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.order-value {
+  color: #333;
+  font-size: 26rpx;
+}
+
+.order-bottom {
+  border-top: 2rpx solid #f0f1f4;
+  margin-top: 14rpx;
+  padding-top: 14rpx;
+}
+
+.order-amount {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #c0392b;
+}
+
+.pay-link {
+  color: #1f3a5f;
+  font-weight: 600;
+}

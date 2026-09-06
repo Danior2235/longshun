@@ -1,0 +1,17 @@
+# Build artifacts
+*.o
+build/
+
+# Compiled binaries & backups
+longshun
+*.bak
+*.bak.*
+
+# Logs
+server.log
+*.log
+data/logs/
+
+# Editor / OS
+*.swp
+.DS_Store

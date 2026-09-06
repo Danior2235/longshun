@@ -1,0 +1,118 @@
+.page {
+  padding: 24rpx;
+}
+
+.pay-head {
+  text-align: center;
+}
+
+.amount-label {
+  font-size: 26rpx;
+  color: #888;
+}
+
+.amount {
+  font-size: 72rpx;
+  font-weight: 700;
+  color: #c0392b;
+  margin: 8rpx 0 24rpx;
+}
+
+.order-line {
+  border-top: 2rpx solid #f0f1f4;
+  padding-top: 14rpx;
+  margin-top: 14rpx;
+}
+
+.order-label {
+  color: #999;
+  font-size: 26rpx;
+}
+
+.order-value {
+  color: #444;
+  font-size: 26rpx;
+}
+
+.status-paid {
+  color: #1d7a4f;
+  font-weight: 600;
+}
+
+.pay-method {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #f0f1f4;
+}
+
+.pay-method:last-of-type {
+  border-bottom: none;
+}
+
+.pay-method:active {
+  opacity: 0.7;
+}
+
+.method-icon {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 40rpx;
+  background: #f7f0dc;
+  border-radius: 16rpx;
+  margin-right: 20rpx;
+}
+
+.wechat-icon {
+  background: #e5f5ec;
+}
+
+.method-name {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.method-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.paid-box {
+  text-align: center;
+  padding: 30rpx 0;
+}
+
+.paid-icon {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  margin: 0 auto;
+  background: #e5f5ec;
+  color: #1d7a4f;
+  border-radius: 50%;
+  font-size: 56rpx;
+  font-weight: 700;
+}
+
+.paid-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  margin: 24rpx 0;
+}
+
+.go-btn {
+  width: 320rpx;
+  margin: 0 auto;
+}
+
+.query-bar {
+  padding: 10rpx 0 60rpx;
+}
+
+.query-btn {
+  width: 46%;
+  font-size: 26rpx;
+}

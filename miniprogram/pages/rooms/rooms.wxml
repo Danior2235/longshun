@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="search-bar">
+    <input
+      class="search-input"
+      placeholder="搜索楼栋 / 房型 / 净房·含早"
+      placeholder-class="placeholder"
+      value="{{keyword}}"
+      bindinput="onSearch"
+    />
+  </view>
+
+  <view class="summary card">
+    <text class="summary-text">共 {{total}} 条报价（政府/企业、研学/旅行社 两种客群口径）</text>
+  </view>
+
+  <block wx:for="{{groups}}" wx:key="name">
+    <view class="card">
+      <view class="card-title">{{item.name}}</view>
+      <view
+        class="room-item"
+        wx:for="{{item.items}}"
+        wx:for-item="r"
+        wx:key="price"
+      >
+        <view class="row-between">
+          <view class="room-head">
+            <text class="room-type">{{r.room_type}}</text>
+            <text class="tag tag-gold">{{r.category}}</text>
+          </view>
+          <text class="price price-big">¥{{r.price}}</text>
+        </view>
+        <view class="room-meta">
+          <text class="tag">{{r.cust_label}}</text>
+          <text class="tag">{{r.breakfast_label}}</text>
+        </view>
+        <view class="book-btn" data-item="{{r}}" bindtap="onBook">立即预订</view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{!loading && groups.length === 0}}" class="empty">
+    未找到匹配的报价，试试其它关键词
+  </view>
+</view>

@@ -1,0 +1,22 @@
+.page {
+  padding: 24rpx;
+}
+
+.radio-item {
+  margin-right: 40rpx;
+  font-size: 28rpx;
+}
+
+.picker-value {
+  line-height: 40rpx;
+}
+
+.note-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 160rpx;
+}
+
+.submit-wrap {
+  padding: 10rpx 0 60rpx;
+}

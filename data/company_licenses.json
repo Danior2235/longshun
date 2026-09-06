@@ -1,0 +1,42 @@
+[
+  {
+    "company": "龙顺庄园管理有限公司",
+    "taxpayer_type": "general",
+    "industry": "hotel",
+    "rate": 0.09,
+    "annual_limit": 0,
+    "enabled": true
+  },
+  {
+    "company": "龙顺餐饮服务有限公司",
+    "taxpayer_type": "small",
+    "industry": "catering",
+    "rate": 0.01,
+    "annual_limit": 500,
+    "enabled": true
+  },
+  {
+    "company": "龙顺会议会展服务有限公司",
+    "taxpayer_type": "small",
+    "industry": "meeting",
+    "rate": 0.01,
+    "annual_limit": 500,
+    "enabled": true
+  },
+  {
+    "company": "龙顺商贸有限公司",
+    "taxpayer_type": "general",
+    "industry": "goods",
+    "rate": 0.13,
+    "annual_limit": 0,
+    "enabled": true
+  },
+  {
+    "company": "龙顺企业管理服务有限公司",
+    "taxpayer_type": "small",
+    "industry": "service",
+    "rate": 0.01,
+    "annual_limit": 500,
+    "enabled": true
+  }
+]

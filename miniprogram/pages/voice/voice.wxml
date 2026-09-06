@@ -1,0 +1,42 @@
+<view class="page">
+  <!-- 对话气泡区 -->
+  <scroll-view class="chat" scroll-y scroll-into-view="{{scrollAnchor}}" scroll-with-animation>
+    <view class="msg {{item.role}}" wx:for="{{messages}}" wx:key="id" id="m{{item.id}}">
+      <view class="bubble">{{item.text}}</view>
+      <view class="cards" wx:if="{{item.cards.length}}">
+        <view class="card" wx:for="{{item.cards}}" wx:for-item="c" wx:key="title">
+          <view class="ct">{{c.title}}</view>
+          <view class="cs" wx:if="{{c.sub}}">{{c.sub}}</view>
+          <view class="cp" wx:if="{{c.price}}">{{c.price}}</view>
+        </view>
+      </view>
+      <view class="opts" wx:if="{{item.options.length}}">
+        <text class="chip" wx:for="{{item.options}}" wx:for-item="o" wx:key="*this" data-text="{{o}}" bindtap="useChip">{{o}}</text>
+      </view>
+      <view class="opts" wx:if="{{item.book}}">
+        <text class="chip gold" data-book="{{item.book}}" bindtap="goBook">✓ 去下单确认</text>
+      </view>
+    </view>
+    <view class="typing" wx:if="{{typing}}"><text>助手正在输入…</text></view>
+    <view id="bottom"></view>
+  </scroll-view>
+
+  <!-- 状态条 -->
+  <view class="status {{statusType}}">{{statusText}}</view>
+
+  <!-- 输入区：原生 input，聚焦后由系统输入法麦克风语音输入 -->
+  <view class="bar">
+    <input
+      class="input"
+      value="{{inputText}}"
+      focus="{{autoFocus}}"
+      confirm-type="send"
+      confirm-hold="{{false}}"
+      placeholder="点下方🎤聚焦输入框，再用输入法麦克风说话；或直接输入"
+      bindinput="onInput"
+      bindconfirm="onConfirm"
+    />
+    <button class="mic {{listening ? 'on' : ''}}" bindtap="toggleMic">🎤</button>
+    <button class="send" bindtap="sendText">发送</button>
+  </view>
+</view>

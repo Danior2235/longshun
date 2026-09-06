@@ -1,0 +1,45 @@
+[
+  {
+    "no": "101",
+    "type": "标准间",
+    "status": "available"
+  },
+  {
+    "no": "102",
+    "type": "标准间",
+    "status": "maintenance",
+    "updated_at": "sync"
+  },
+  {
+    "no": "103",
+    "type": "标准间",
+    "status": "available"
+  },
+  {
+    "no": "201",
+    "type": "豪华间",
+    "status": "maintenance",
+    "updated_at": "sync"
+  },
+  {
+    "no": "202",
+    "type": "豪华间",
+    "status": "available"
+  },
+  {
+    "no": "203",
+    "type": "豪华间",
+    "status": "maintenance",
+    "updated_at": "sync"
+  },
+  {
+    "no": "301",
+    "type": "行政套房",
+    "status": "available"
+  },
+  {
+    "no": "302",
+    "type": "行政套房",
+    "status": "available"
+  }
+]

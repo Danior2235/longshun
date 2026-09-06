@@ -1,0 +1,37 @@
+[
+  {
+    "url": "data/demo_pages/tender_hotel_group.html",
+    "name": "招标网-酒店集团年会采购",
+    "kind": "webpage",
+    "freq_min": 60,
+    "enabled": true
+  },
+  {
+    "url": "data/demo_pages/tender_manufacturing.html",
+    "name": "行业信息源-制造企业商务服务",
+    "kind": "webpage",
+    "freq_min": 120,
+    "enabled": true
+  },
+  {
+    "url": "data/demo_pages/tender_tech_launch.html",
+    "name": "招标网-科技企业发布会",
+    "kind": "webpage",
+    "freq_min": 60,
+    "enabled": true
+  },
+  {
+    "url": "data/demo_pages/tender_government.html",
+    "name": "公共资源交易-政务会议服务",
+    "kind": "webpage",
+    "freq_min": 30,
+    "enabled": true
+  },
+  {
+    "url": "data/demo_pages/api_source.json",
+    "name": "行业公开信息源API(结构化)",
+    "kind": "json",
+    "freq_min": 15,
+    "enabled": true
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "half_day_hours": 4,
+  "evening_surcharge_pct": 40,
+  "overtime_2h_quarter": true,
+  "overtime_over2h_half": true,
+  "catering_free_venue_threshold": 10000,
+  "water_exclude_venues": ["大礼堂","一楼B、C厅","DNT风雨操场"],
+  "water_half_day_count": 1,
+  "water_full_day_count": 2,
+  "day_time_periods": ["08:00-12:00","14:00-18:00"],
+  "evening_time_period": "19:00-23:00"
+}

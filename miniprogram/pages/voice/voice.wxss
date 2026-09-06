@@ -1,0 +1,142 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f5f6f8;
+}
+
+.chat {
+  flex: 1;
+  padding: 24rpx;
+  box-sizing: border-box;
+}
+
+.msg {
+  display: flex;
+  margin-bottom: 24rpx;
+}
+.msg.me {
+  justify-content: flex-end;
+}
+.msg.ai {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 20rpx 26rpx;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  line-height: 1.6;
+  word-break: break-all;
+}
+.msg.me .bubble {
+  background: #2c5587;
+  color: #fff;
+  border-bottom-right-radius: 6rpx;
+}
+.msg.ai .bubble {
+  background: #fff;
+  color: #333;
+  border-bottom-left-radius: 6rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 12rpx;
+  max-width: 78%;
+}
+.card {
+  background: #fbf6e8;
+  border: 1rpx solid #e8d9a8;
+  border-radius: 12rpx;
+  padding: 14rpx 18rpx;
+  min-width: 180rpx;
+}
+.ct { font-size: 26rpx; font-weight: 600; color: #1f3a5f; }
+.cs { font-size: 22rpx; color: #888; margin-top: 4rpx; }
+.cp { font-size: 26rpx; color: #c9a227; margin-top: 6rpx; font-weight: 600; }
+
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 12rpx;
+  max-width: 78%;
+}
+.chip {
+  background: #eef3fa;
+  color: #2c5587;
+  border: 1rpx solid #cdddf0;
+  border-radius: 30rpx;
+  padding: 10rpx 24rpx;
+  font-size: 26rpx;
+}
+.chip:active { background: #dbe7f5; }
+.chip.gold {
+  background: #c9a227;
+  color: #fff;
+  border-color: #c9a227;
+}
+
+.typing {
+  font-size: 24rpx;
+  color: #999;
+  padding: 8rpx 4rpx;
+}
+
+.status {
+  font-size: 24rpx;
+  padding: 14rpx 24rpx;
+  color: #666;
+  background: #eef1f5;
+  border-top: 1rpx solid #e3e7ec;
+}
+.status.ok { color: #2c5587; }
+.status.err { color: #d9483b; }
+
+.bar {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background: #fff;
+  border-top: 1rpx solid #e3e7ec;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+}
+.input {
+  flex: 1;
+  height: 76rpx;
+  background: #f3f5f8;
+  border-radius: 38rpx;
+  padding: 0 28rpx;
+  font-size: 30rpx;
+}
+.mic {
+  width: 88rpx;
+  height: 76rpx;
+  margin: 0 12rpx;
+  padding: 0;
+  line-height: 76rpx;
+  font-size: 40rpx;
+  background: #f3f5f8;
+  border-radius: 38rpx;
+  color: #555;
+}
+.mic.on {
+  background: #2c5587;
+  color: #fff;
+}
+.send {
+  width: 120rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  padding: 0;
+  font-size: 28rpx;
+  background: #c9a227;
+  color: #fff;
+  border-radius: 38rpx;
+}
+.send:active { opacity: 0.85; }

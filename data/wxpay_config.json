@@ -1,0 +1,8 @@
+{
+  "mode": "mock",
+  "appid": "wx0000000000000000",
+  "mchid": "1900000000",
+  "api_key": "请填写微信支付商户 APIv2 密钥(32位)",
+  "notify_url": "https://your-domain.example/api/pay/notify",
+  "remark": "mode=mock 为开发模拟支付; 生产环境改为 real 并填写 appid/mchid/api_key/notify_url 后, 由网关将 /api/pay/* 转发到微信支付服务"
+}

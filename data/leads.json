@@ -1,0 +1,62 @@
+[
+  {
+    "company": "星海国际酒店集团有限公司",
+    "contact": "",
+    "phone": "13907158823",
+    "email": "wang.jingli@xinghaihotel.com",
+    "needs": "采购,招标,预算,会议,年会,宴会,客房,住宿",
+    "source": "招标网-酒店集团年会采购",
+    "url": "data/demo_pages/tender_hotel_group.html",
+    "biz_type": "meeting"
+  },
+  {
+    "company": "华创精密制造有限公司",
+    "contact": "",
+    "phone": "057188901234",
+    "email": "cg@huachuang-precision.com",
+    "needs": "采购,培训,团建,住宿",
+    "source": "行业信息源-制造企业商务服务",
+    "url": "data/demo_pages/tender_manufacturing.html",
+    "biz_type": "meeting"
+  },
+  {
+    "company": "云启科技股份有限公司",
+    "contact": "",
+    "phone": "13588321009",
+    "email": "chen@yunqitech.cn",
+    "needs": "招标,签约,预算,会议,发布会,宴会,住宿",
+    "source": "招标网-科技企业发布会",
+    "url": "data/demo_pages/tender_tech_launch.html",
+    "biz_type": "meeting"
+  },
+  {
+    "company": "公共资源交易-政务会议服务",
+    "contact": "",
+    "phone": "075526663333",
+    "email": "",
+    "needs": "采购,预算,会议,设备",
+    "source": "公共资源交易-政务会议服务",
+    "url": "data/demo_pages/tender_government.html",
+    "biz_type": "meeting"
+  },
+  {
+    "company": "恒远生物科技有限公司",
+    "contact": "",
+    "phone": "021-5088-7788",
+    "email": "procurement@hengyuan-bio.com",
+    "needs": "采购,预算,会议,住宿",
+    "source": "行业公开信息源API(结构化)",
+    "url": "data/demo_pages/api_source.json",
+    "biz_type": "meeting"
+  },
+  {
+    "company": "绿洲环保集团股份有限公司",
+    "contact": "",
+    "phone": "025-8666-9900",
+    "email": "office@oasis-env.com",
+    "needs": "会议,客房",
+    "source": "行业公开信息源API(结构化)",
+    "url": "data/demo_pages/api_source.json",
+    "biz_type": "meeting"
+  }
+]

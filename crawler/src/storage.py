@@ -23,7 +23,15 @@ class Storage:
         return url not in self.seen
 
     def save(self, leads):
-        new_leads = [l for l in leads if self.is_new(l.url)]
+        # 单批次内先按 url 去重（同一公告常命中多个关键词，导致重复）
+        _batch_seen = set()
+        _deduped = []
+        for l in leads:
+            if l.url in _batch_seen:
+                continue
+            _batch_seen.add(l.url)
+            _deduped.append(l)
+        new_leads = [l for l in _deduped if self.is_new(l.url)]
         ts = datetime.now(TZ).strftime("%Y%m%d")
         run_file = os.path.join(self.output_dir, f"leads_{ts}.json")
 

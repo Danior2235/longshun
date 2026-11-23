@@ -5,3 +5,5 @@ crawler/output/
 venv/
 .env
 *.log
+crawler/_analyze.py
+crawler/output/sample_*.html
